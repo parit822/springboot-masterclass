@@ -3,6 +3,7 @@ package com.tkParit.product.service;
 import com.tkParit.product.dto.ProductDTO;
 import com.tkParit.product.entity.Category;
 import com.tkParit.product.entity.Product;
+import com.tkParit.product.exception.CategoryNotFoundException;
 import com.tkParit.product.mapper.ProductMapper;
 import com.tkParit.product.repository.CategoryRepository;
 import com.tkParit.product.repository.ProductRepository;
@@ -24,7 +25,8 @@ public class ProductService {
        Category category= categoryRepository
                .findById(productDTO.getCategoryId())
                .orElseThrow(()
-                       ->new RuntimeException("Category not found"));
+                       ->new CategoryNotFoundException("Category id "
+                       +productDTO.getCategoryId()+"  not found"));
 
        //DTO to Entity
        Product product= ProductMapper.toProductEntity(productDTO, category);
